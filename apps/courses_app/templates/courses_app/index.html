@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Courses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <dic class="upper">
+        <h2>Add a new course</h2>
+       
+        <form action="/create" method="POST">
+            {% csrf_token %}
+            <p>Name:<input type="text" name="name"></p>
+            <p>Description:
+            <textarea name="desc"></textarea></p>
+            <input type="submit" name="submit" value="Add course">
+        </form>
+        
+    </dic>
+    <div class="lower">
+        <h2>Courses</h2>
+        <table>
+            <thead>
+                <td>Course Name</td>
+                <td>Description</td>
+                <td>Date Added</td>
+                <td>Actions</td>
+            </thead>
+            <tbody>
+                <tr><td> </td></tr>
+                {% for x in everything %}
+                <form action="/remove" method="POST">
+                {% csrf_token %}
+                 <tr>
+                    <td>{{x.name}}</td>
+                    <td>{{x.desc}}</td>
+                    <td>{{x.created_at}}</td>
+                    <td>
+                        
+                            <input type="hidden" name="course_id" value = {{x.id}}>
+                            <input type="submit" name="submit" value="remove">
+                        </form>
+                    </td>
+                </tr>    
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
